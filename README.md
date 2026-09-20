@@ -1,13 +1,16 @@
-# Contact API
+# Nginx PHP-FPM
 
 A Home Assistant custom integration that receives a website contact-form
 submission and relays it to a Discord channel via a Discord incoming
 webhook.
 
-It's a drop-in replacement for a standalone Flask `contact_api` Docker
-container sitting behind nginx - the same job, just running inside Home
-Assistant instead of as a separate container, so there's one less thing to
-patch, rebuild, and keep an eye on.
+Named after the original docker-compose project it partially replaces
+(`/opt/docker/nginx-php_fpm/`). It's a drop-in replacement for that
+project's standalone Flask `contact_api` Docker container sitting behind
+nginx - the same job, just running inside Home Assistant instead of as a
+separate container, so there's one less thing to patch, rebuild, and keep
+an eye on. `nginx` and `php_fpm` themselves aren't part of this
+integration - they keep running exactly as they do today.
 
 ## What it replaces
 
@@ -30,24 +33,24 @@ and can retire `contact_api` from your `docker-compose.yml` entirely.
 
 1. HACS → Integrations → ⋮ → Custom repositories → add this repo URL,
    category "Integration".
-2. Install "Contact API", then restart Home Assistant.
+2. Install "Nginx PHP-FPM", then restart Home Assistant.
 
 ### Manual
 
-Copy `custom_components/contact_api` into your Home Assistant
+Copy `custom_components/nginx_php_fpm` into your Home Assistant
 `config/custom_components/` folder and restart.
 
 ## Setup
 
 1. In Home Assistant: **Settings → Devices & Services → Add Integration →
-   Contact API**.
+   Nginx PHP-FPM**.
 2. Paste your Discord channel's incoming webhook URL
    (`https://discord.com/api/webhooks/...` - create one under a Discord
    channel's *Integrations → Webhooks* if you don't have one yet). Home
    Assistant checks it's reachable before accepting it.
 3. On success, a notification appears in Home Assistant with the full
    webhook URL to point nginx at (also logged at `INFO` level from the
-   `custom_components.contact_api` logger if you miss the notification).
+   `custom_components.nginx_php_fpm` logger if you miss the notification).
    It looks like:
 
    ```
@@ -145,7 +148,7 @@ curl -i http://localhost:8082/api/contact \
 
 A successful POST returns `{"status": "ok"}` with a `200`, and the message
 shows up in your configured Discord channel. Check Home Assistant's log
-(`custom_components.contact_api`) if it doesn't - a `502` means Home
+(`custom_components.nginx_php_fpm`) if it doesn't - a `502` means Home
 Assistant reached the webhook handler fine but Discord rejected or refused
 the forwarded message (webhook deleted, channel removed, etc.); a `400`
 means the JSON payload itself failed validation.

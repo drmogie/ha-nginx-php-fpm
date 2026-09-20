@@ -1,10 +1,10 @@
-"""Constants for the Contact API integration."""
+"""Constants for the Nginx PHP-FPM integration."""
 
-DOMAIN = "contact_api"
+DOMAIN = "nginx_php_fpm"
 
 CONF_DISCORD_WEBHOOK_URL = "discord_webhook_url"
 
-DEFAULT_WEBHOOK_NAME = "Contact API"
+DEFAULT_WEBHOOK_NAME = "Nginx PHP-FPM"
 
 # Discord embed description hard-limit is 4096 characters; leave headroom
 # for the surrounding field formatting.

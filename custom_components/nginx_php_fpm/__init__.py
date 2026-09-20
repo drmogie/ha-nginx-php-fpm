@@ -1,11 +1,13 @@
-"""The Contact API integration.
+"""The Nginx PHP-FPM integration.
 
-Receives a contact-form submission (JSON POST) via a Home Assistant
-webhook and relays it to a Discord channel, using Discord's own
-incoming-webhook mechanism. Written to be a drop-in replacement for the
-standalone Flask `contact_api` container from the original
-nginx + php-fpm + Flask docker-compose backend - see README.md for the
-matching nginx configuration change.
+Named after the original docker-compose project this replaces a piece of
+(`/opt/docker/nginx-php_fpm/`). Receives a contact-form submission (JSON
+POST) via a Home Assistant webhook and relays it to a Discord channel,
+using Discord's own incoming-webhook mechanism. Written to be a drop-in
+replacement for that project's standalone Flask `contact_api` container -
+the `nginx` and `php_fpm` containers themselves are untouched and keep
+serving the site directly. See README.md for the matching nginx
+configuration change.
 """
 from __future__ import annotations
 
@@ -38,7 +40,7 @@ PLATFORMS: list[str] = []
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Contact API from a config entry."""
+    """Set up Nginx PHP-FPM from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.data[CONF_WEBHOOK_ID]] = entry.data[
         CONF_DISCORD_WEBHOOK_URL
@@ -56,15 +58,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.async_on_unload(entry.add_update_listener(_async_update_listener))
 
     webhook_url = webhook.async_generate_url(hass, entry.data[CONF_WEBHOOK_ID])
-    _LOGGER.info("Contact API webhook ready at: %s", webhook_url)
+    _LOGGER.info("%s webhook ready at: %s", entry.title, webhook_url)
     await hass.services.async_call(
         "persistent_notification",
         "create",
         {
-            "title": "Contact API webhook ready",
+            "title": f"{entry.title} webhook ready",
             "message": (
                 f"Point your nginx `/api/contact` location at:\n\n`{webhook_url}`\n\n"
-                "See the ha-contact-api README for the exact nginx snippet."
+                "See the ha-nginx-php-fpm README for the exact nginx snippet."
             ),
             "notification_id": f"{DOMAIN}_{entry.entry_id}_webhook_url",
         },

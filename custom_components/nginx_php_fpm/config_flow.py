@@ -1,4 +1,4 @@
-"""Config flow for the Contact API integration."""
+"""Config flow for the Nginx PHP-FPM integration."""
 from __future__ import annotations
 
 import asyncio
@@ -15,7 +15,12 @@ from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import CONF_DISCORD_WEBHOOK_URL, DISCORD_WEBHOOK_URL_PREFIXES, DOMAIN
+from .const import (
+    CONF_DISCORD_WEBHOOK_URL,
+    DEFAULT_WEBHOOK_NAME,
+    DISCORD_WEBHOOK_URL_PREFIXES,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -44,8 +49,8 @@ async def _validate_discord_webhook(hass: HomeAssistant, url: str) -> str | None
         return "cannot_connect"
 
 
-class ContactApiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Contact API."""
+class NginxPhpFpmConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a config flow for Nginx PHP-FPM."""
 
     VERSION = 1
 
@@ -61,7 +66,7 @@ class ContactApiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if error is None:
                 webhook_id = webhook.async_generate_id()
                 return self.async_create_entry(
-                    title="Contact API",
+                    title=DEFAULT_WEBHOOK_NAME,
                     data={
                         CONF_WEBHOOK_ID: webhook_id,
                         CONF_DISCORD_WEBHOOK_URL: url,
@@ -80,12 +85,12 @@ class ContactApiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def async_get_options_flow(
         config_entry: config_entries.ConfigEntry,
-    ) -> ContactApiOptionsFlow:
+    ) -> NginxPhpFpmOptionsFlow:
         """Get the options flow for this handler."""
-        return ContactApiOptionsFlow(config_entry)
+        return NginxPhpFpmOptionsFlow(config_entry)
 
 
-class ContactApiOptionsFlow(config_entries.OptionsFlow):
+class NginxPhpFpmOptionsFlow(config_entries.OptionsFlow):
     """Let the Discord webhook URL be updated after setup."""
 
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:

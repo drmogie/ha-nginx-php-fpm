@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Set up Contact API",
+        "title": "Set up Nginx PHP-FPM",
         "description": "Paste the Discord incoming webhook URL that contact-form submissions should be relayed to. Home Assistant will create a webhook endpoint for your website's server to post to - the URL is shown after setup.",
         "data": {
           "discord_webhook_url": "Discord webhook URL"

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026.09.19.02
+
+Renamed the whole project (repo, integration domain, display name) from
+`ha-contact-api`/`contact_api` to `ha-nginx-php-fpm`/`nginx_php_fpm`, to
+match the original docker-compose project's own folder name
+(`/opt/docker/nginx-php_fpm/`) rather than the one service being replaced.
+No functional change - same config flow, same webhook behavior, same
+validation. If you already installed the `.01` release under the old name,
+remove that config entry and re-add it after updating (the domain change
+means Home Assistant sees it as a different integration).
+
 ## 2026.09.19.01
 
 Initial release.
