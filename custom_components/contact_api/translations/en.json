@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Contact API",
+        "description": "Paste the Discord incoming webhook URL that contact-form submissions should be relayed to. Home Assistant will create a webhook endpoint for your website's server to post to - the URL is shown after setup.",
+        "data": {
+          "discord_webhook_url": "Discord webhook URL"
+        }
+      }
+    },
+    "error": {
+      "invalid_url": "That doesn't look like a Discord webhook URL (expected https://discord.com/api/webhooks/...).",
+      "webhook_not_found": "Discord says this webhook doesn't exist. Double-check the URL.",
+      "cannot_connect": "Couldn't reach Discord to verify the webhook. Check Home Assistant's internet connection and try again."
+    },
+    "abort": {
+      "already_configured": "This webhook is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Update Discord webhook URL",
+        "data": {
+          "discord_webhook_url": "Discord webhook URL"
+        }
+      }
+    },
+    "error": {
+      "invalid_url": "That doesn't look like a Discord webhook URL (expected https://discord.com/api/webhooks/...).",
+      "webhook_not_found": "Discord says this webhook doesn't exist. Double-check the URL.",
+      "cannot_connect": "Couldn't reach Discord to verify the webhook. Check Home Assistant's internet connection and try again."
+    }
+  }
+}

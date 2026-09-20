@@ -1,0 +1,12 @@
+{
+  "domain": "contact_api",
+  "name": "Contact API",
+  "codeowners": ["@drmogie"],
+  "config_flow": true,
+  "dependencies": ["webhook", "http"],
+  "documentation": "https://github.com/drmogie/ha-contact-api",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/drmogie/ha-contact-api/issues",
+  "requirements": [],
+  "version": "2026.09.19.01"
+}
